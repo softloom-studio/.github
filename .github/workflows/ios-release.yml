@@ -1,0 +1,32 @@
+# Reusable: ship one app to TestFlight or App Review.
+# Status: template. Requires environment "production" with required reviewers and secrets:
+#   ASC_KEY_ID, ASC_ISSUER_ID, ASC_PRIVATE_KEY (App Store Connect API key),
+#   MATCH_PASSWORD, MATCH_GIT_URL (fastlane match, repo softloom-studio/certificates)
+name: ios-release
+
+on:
+  workflow_call:
+    inputs:
+      app:
+        required: true
+        type: string
+      target:
+        description: testflight | review
+        required: true
+        type: string
+
+jobs:
+  release:
+    runs-on: macos-latest
+    environment: ${{ inputs.target == 'review' && 'production' || 'testflight' }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Signing
+        run: echo "TODO fastlane match appstore --readonly"
+      - name: Archive
+        run: echo "TODO build archive for ${{ inputs.app }}"
+      - name: Policy check (guideline 2.5.19)
+        run: echo "TODO scan archive with policy-check.sh, fail on hits"
+      - name: Upload / submit
+        run: echo "TODO asc: upload build, sync metadata from Apps/${{ inputs.app }}/metadata, submit if target=review"
