@@ -1,4 +1,4 @@
-# Softloom Studio
+# Colaborating Verviico & Marlerino
 
 A calm app studio. We weave thoughtful iOS apps on one shared platform.
 
